@@ -6,14 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.kotlinfarsi.basicsample.AppExecutors
+import com.kotlinfarsi.basicsample.db.converter.DateConverter
 import com.kotlinfarsi.basicsample.db.dao.CommentDao
 import com.kotlinfarsi.basicsample.db.dao.ProductDao
 import com.kotlinfarsi.basicsample.db.entity.CommentEntity
 import com.kotlinfarsi.basicsample.db.entity.ProductEntity
 
 @Database(entities = [ProductEntity::class, CommentEntity::class], version = 1)
+@TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun productDao(): ProductDao
