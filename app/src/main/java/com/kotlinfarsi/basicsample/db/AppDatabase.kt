@@ -8,13 +8,16 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.kotlinfarsi.basicsample.AppExecutors
+import com.kotlinfarsi.basicsample.db.dao.CommentDao
 import com.kotlinfarsi.basicsample.db.dao.ProductDao
+import com.kotlinfarsi.basicsample.db.entity.CommentEntity
 import com.kotlinfarsi.basicsample.db.entity.ProductEntity
 
-@Database(entities = [ProductEntity::class], version = 1)
+@Database(entities = [ProductEntity::class, CommentEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun productDao(): ProductDao
+    abstract fun commentDao(): CommentDao
 
     companion object {
         const val DATABASE_NAME = "basic-sample-db"
@@ -52,9 +55,10 @@ abstract class AppDatabase : RoomDatabase() {
                                 AppDatabase(appContext, executors)
                             val products =
                                 DataGenerator.generateProducts()
-                            //TODO: Part 5 - (6) modifying database to produce comments too
+                            val comments =
+                                DataGenerator.generateCommentsForProducts(products)
 
-                            insertData(database, products)
+                            insertData(database, products, comments)
 
                             database.setDatabaseCreated()
                         }
@@ -70,10 +74,14 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        private fun insertData(database: AppDatabase, products: List<ProductEntity>) {
+        private fun insertData(
+            database: AppDatabase,
+            products: List<ProductEntity>,
+            comments: List<CommentEntity>
+        ) {
             database.runInTransaction {
                 database.productDao().insertAll(products)
-                //TODO: Part 5 - (5) modifying database to produce comments too
+                database.commentDao().insertAll(comments)
             }
         }
 

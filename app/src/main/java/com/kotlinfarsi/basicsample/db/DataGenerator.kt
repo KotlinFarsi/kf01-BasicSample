@@ -1,7 +1,9 @@
 package com.kotlinfarsi.basicsample.db
 
+import com.kotlinfarsi.basicsample.db.entity.CommentEntity
 import com.kotlinfarsi.basicsample.db.entity.ProductEntity
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 object DataGenerator {
@@ -38,7 +40,26 @@ object DataGenerator {
     }
 
 
-    fun generateCommentsForProducts() {
-        //TODO: Part 5 - (4) implement this method for generating comments for products
+    fun generateCommentsForProducts(products: List<ProductEntity>): List<CommentEntity> {
+        val comments: MutableList<CommentEntity> =
+            ArrayList()
+        val rnd = Random()
+        for (product in products) {
+            val commentsNumber = rnd.nextInt(5) + 1
+            for (i in 0 until commentsNumber) {
+                val comment = CommentEntity()
+                comment.productId = product.id
+                comment.text = COMMENTS[i] + " for " + product.name
+                comment.postedAt =
+                    Date(
+                        System.currentTimeMillis()
+                                - TimeUnit.DAYS.toMillis(commentsNumber - i.toLong())
+                                + TimeUnit.HOURS.toMillis(i.toLong())
+                    )
+
+                comments.add(comment)
+            }
+        }
+        return comments
     }
 }
