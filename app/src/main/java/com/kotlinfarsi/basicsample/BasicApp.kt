@@ -14,8 +14,7 @@ class BasicApp: Application() {
     }
 
     fun getDatabase(): AppDatabase {
-        //TODO: Step 3 - (4) modifying here
-        return AppDatabase()
+        return AppDatabase(this, appExecutors)
     }
 
     fun getRepository(): DataRepository {
