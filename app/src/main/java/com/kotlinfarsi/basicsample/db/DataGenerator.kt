@@ -1,5 +1,9 @@
 package com.kotlinfarsi.basicsample.db
 
+import com.kotlinfarsi.basicsample.db.entity.ProductEntity
+import java.util.*
+import kotlin.collections.ArrayList
+
 object DataGenerator {
     private val FIRST = arrayOf(
         "Special edition", "New", "Cheap", "Quality", "Used"
@@ -16,8 +20,23 @@ object DataGenerator {
     )
 
 
-    fun generateProducts() {
+    fun generateProducts(): List<ProductEntity> {
+        val products: MutableList<ProductEntity> =
+            ArrayList(FIRST.size * SECOND.size)
+        val rnd = Random()
+        for (i in FIRST.indices) {
+            for (j in SECOND.indices) {
+                val product = ProductEntity()
+                product.name = FIRST[i] + " " + SECOND[j]
+                product.description = product.name.toString() + " " + DESCRIPTION[j]
+                product.price = rnd.nextInt(240)
+                product.id = FIRST.size * i + j + 1
+                products.add(product)
+            }
+        }
+        return products
     }
+
 
     fun generateCommentsForProducts() {
     }
