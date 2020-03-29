@@ -1,8 +1,12 @@
 package com.kotlinfarsi.basicsample.ui.product
 
 import android.app.Application
+import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import com.kotlinfarsi.basicsample.DataRepository
+import com.kotlinfarsi.basicsample.db.entity.CommentEntity
+import com.kotlinfarsi.basicsample.db.entity.ProductEntity
 
 class ProductViewModel(
     application: Application,
@@ -10,13 +14,13 @@ class ProductViewModel(
     private val productId: Int
 ) :
     AndroidViewModel(application) {
-    //TODO: Part 6 - (1) create a observable field for product view to include
+    var product: ObservableField<ProductEntity> = ObservableField()
 
-    fun getComments(){
-        //TODO: Part 6 - (2) create a method for loading comments
+    fun getComments(): LiveData<List<CommentEntity>> {
+        return repository.loadComments(productId)
     }
 
-    fun getObservableProduct() {
-        //TODO: Part 6 - (3) create a method for load a product
+    fun getObservableProduct(): LiveData<ProductEntity> {
+        return repository.loadProduct(productId)
     }
 }

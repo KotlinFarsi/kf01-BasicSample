@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.kotlinfarsi.basicsample.R
 import com.kotlinfarsi.basicsample.databinding.ProductFragmentBinding
@@ -58,6 +59,20 @@ class ProductFragment : Fragment() {
 
         binding.lifecycleOwner = this
         binding.productViewModel = viewModel
+
+        viewModel.getObservableProduct().observe(viewLifecycleOwner, Observer {
+            viewModel.product.set(it)
+        })
+
+        viewModel.getComments().observe(viewLifecycleOwner, Observer {commentEntities->
+            if(commentEntities != null){
+                binding.isLoading = false
+                commentAdapter.setCommentList(commentEntities)
+            }else {
+                binding.isLoading = true
+            }
+        })
+
 
     }
 

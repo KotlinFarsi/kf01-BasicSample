@@ -3,6 +3,7 @@ package com.kotlinfarsi.basicsample
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.kotlinfarsi.basicsample.db.AppDatabase
+import com.kotlinfarsi.basicsample.db.entity.CommentEntity
 import com.kotlinfarsi.basicsample.db.entity.ProductEntity
 
 class DataRepository(private val database: AppDatabase) {
@@ -39,5 +40,7 @@ class DataRepository(private val database: AppDatabase) {
         return database.productDao().loadProduct(productId)
     }
 
-    //TODO: Part 5 - (7) adding comments in repository
+    fun loadComments(productId: Int): LiveData<List<CommentEntity>> {
+        return database.commentDao().loadComments(productId)
+    }
 }
