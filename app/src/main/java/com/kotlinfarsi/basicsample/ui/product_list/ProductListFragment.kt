@@ -49,6 +49,8 @@ class ProductListFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(ProductListViewModel::class.java)
         mBinding.lifecycleOwner = this
 
+        //TODO: Part 4 - (4) and then use the method here and afterward you can see the result till here
     }
 
+    //TODO: Part 4 - (3) creating a method that observer and update the adapter
 }
