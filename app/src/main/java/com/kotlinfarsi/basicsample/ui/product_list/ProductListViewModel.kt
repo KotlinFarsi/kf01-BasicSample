@@ -28,5 +28,6 @@ class ProductListViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     fun searchProducts(query: String){
+        //TODO: Part 7 - (6) creating a method for searching products
     }
 }

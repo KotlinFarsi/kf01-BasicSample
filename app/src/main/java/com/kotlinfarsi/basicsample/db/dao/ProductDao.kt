@@ -17,4 +17,6 @@ interface ProductDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(products: List<ProductEntity>)
+
+    //TODO: Part 7 - (2) add search all products
 }

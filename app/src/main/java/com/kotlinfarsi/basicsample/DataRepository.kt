@@ -43,4 +43,6 @@ class DataRepository(private val database: AppDatabase) {
     fun loadComments(productId: Int): LiveData<List<CommentEntity>> {
         return database.commentDao().loadComments(productId)
     }
+
+    //TODO: Part 7 - (6) creating search all product
 }

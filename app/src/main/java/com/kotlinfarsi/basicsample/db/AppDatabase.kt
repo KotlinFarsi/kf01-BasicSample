@@ -15,6 +15,7 @@ import com.kotlinfarsi.basicsample.db.dao.ProductDao
 import com.kotlinfarsi.basicsample.db.entity.CommentEntity
 import com.kotlinfarsi.basicsample.db.entity.ProductEntity
 
+//TODO: Part 7 - (3) modifying annotation and version
 @Database(entities = [ProductEntity::class, CommentEntity::class], version = 1)
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -67,6 +68,7 @@ abstract class AppDatabase : RoomDatabase() {
                         }
                     }
                 })
+                //TODO: Part 7 - (5) adding migration
                 .build()
         }
 
@@ -90,6 +92,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     }
 
+    //TODO: Part 7 - (4) creating migration
 
     private fun setDatabaseCreated() {
         mIsDatabaseCreated.postValue(true)

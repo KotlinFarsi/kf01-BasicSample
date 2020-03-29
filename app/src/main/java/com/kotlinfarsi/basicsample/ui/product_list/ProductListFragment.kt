@@ -49,6 +49,8 @@ class ProductListFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(ProductListViewModel::class.java)
         mBinding.lifecycleOwner = this
 
+        //TODO: Part 7 - (7) search button
+
         subscribeUi(viewModel.getProducts())
     }
 
