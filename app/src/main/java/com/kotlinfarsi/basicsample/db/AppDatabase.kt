@@ -52,6 +52,7 @@ abstract class AppDatabase : RoomDatabase() {
                                 AppDatabase(appContext, executors)
                             val products =
                                 DataGenerator.generateProducts()
+                            //TODO: Part 5 - (6) modifying database to produce comments too
 
                             insertData(database, products)
 
@@ -72,6 +73,7 @@ abstract class AppDatabase : RoomDatabase() {
         private fun insertData(database: AppDatabase, products: List<ProductEntity>) {
             database.runInTransaction {
                 database.productDao().insertAll(products)
+                //TODO: Part 5 - (5) modifying database to produce comments too
             }
         }
 

@@ -38,4 +38,6 @@ class DataRepository(private val database: AppDatabase) {
     fun loadProduct(productId: Int): LiveData<ProductEntity> {
         return database.productDao().loadProduct(productId)
     }
+
+    //TODO: Part 5 - (7) adding comments in repository
 }

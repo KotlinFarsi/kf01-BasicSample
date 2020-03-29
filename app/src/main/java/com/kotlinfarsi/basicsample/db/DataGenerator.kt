@@ -39,5 +39,6 @@ object DataGenerator {
 
 
     fun generateCommentsForProducts() {
+        //TODO: Part 5 - (4) implement this method for generating comments for products
     }
 }
