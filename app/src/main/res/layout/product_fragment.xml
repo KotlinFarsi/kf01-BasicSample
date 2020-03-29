@@ -20,6 +20,8 @@
         android:background="@color/cardview_light_background"
         android:orientation="vertical">
 
+        <!--TODO: Part 6 - (4) Include product item layout-->
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
