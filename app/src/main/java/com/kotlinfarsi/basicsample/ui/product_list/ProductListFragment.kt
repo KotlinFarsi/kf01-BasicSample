@@ -49,8 +49,18 @@ class ProductListFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(ProductListViewModel::class.java)
         mBinding.lifecycleOwner = this
 
-        //TODO: Part 4 - (4) and then use the method here and afterward you can see the result till here
+        subscribeUi(viewModel.getProducts())
     }
 
-    //TODO: Part 4 - (3) creating a method that observer and update the adapter
+    private fun subscribeUi(liveData: LiveData<List<ProductEntity>>) {
+        liveData.observe(viewLifecycleOwner, Observer { myProducts ->
+            if (myProducts != null) {
+                mBinding.isLoading = false
+                mProductAdapter?.setProductList(myProducts)
+            } else {
+                mBinding.isLoading = true
+            }
+            mBinding.executePendingBindings()
+        })
+    }
 }
