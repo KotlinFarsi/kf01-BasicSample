@@ -49,7 +49,15 @@ class ProductListFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(ProductListViewModel::class.java)
         mBinding.lifecycleOwner = this
 
-        //TODO: Part 7 - (7) search button
+        mBinding.productsSearchBtn.setOnClickListener {
+            val query = mBinding.productsSearchBox.text
+            if (query == null || query.toString().isEmpty()) {
+                subscribeUi(viewModel.getProducts())
+            } else {
+                subscribeUi(viewModel.searchProducts("*$query*"))
+            }
+        }
+
 
         subscribeUi(viewModel.getProducts())
     }

@@ -18,5 +18,10 @@ interface ProductDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(products: List<ProductEntity>)
 
-    //TODO: Part 7 - (2) add search all products
+    @Query(
+        "SELECT products.* FROM products JOIN productsFts ON (products.id = productsFts.rowid) "
+                + "WHERE productsFts MATCH :query"
+    )
+    fun searchAllProducts(query: String): LiveData<List<ProductEntity>>
+
 }

@@ -7,6 +7,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.kotlinfarsi.basicsample.AppExecutors
 import com.kotlinfarsi.basicsample.db.converter.DateConverter
@@ -14,9 +15,9 @@ import com.kotlinfarsi.basicsample.db.dao.CommentDao
 import com.kotlinfarsi.basicsample.db.dao.ProductDao
 import com.kotlinfarsi.basicsample.db.entity.CommentEntity
 import com.kotlinfarsi.basicsample.db.entity.ProductEntity
+import com.kotlinfarsi.basicsample.db.entity.ProductFtsEntity
 
-//TODO: Part 7 - (3) modifying annotation and version
-@Database(entities = [ProductEntity::class, CommentEntity::class], version = 1)
+@Database(entities = [ProductEntity::class, ProductFtsEntity::class, CommentEntity::class], version = 1)
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -68,7 +69,7 @@ abstract class AppDatabase : RoomDatabase() {
                         }
                     }
                 })
-                //TODO: Part 7 - (5) adding migration
+                .addMigrations(MIGRATION_1_2)
                 .build()
         }
 
@@ -90,9 +91,20 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-    }
+        private val MIGRATION_1_2: Migration = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL(
+                    "CREATE VIRTUAL TABLE IF NOT EXISTS `productsFts` USING FTS4("
+                            + "`name` TEXT, `description` TEXT, content=`products`)"
+                )
+                database.execSQL(
+                    "INSERT INTO productsFts (`rowid`, `name`, `description`) "
+                            + "SELECT `id`, `name`, `description` FROM products"
+                )
+            }
+        }
 
-    //TODO: Part 7 - (4) creating migration
+    }
 
     private fun setDatabaseCreated() {
         mIsDatabaseCreated.postValue(true)

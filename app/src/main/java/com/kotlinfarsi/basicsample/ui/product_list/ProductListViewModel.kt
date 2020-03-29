@@ -27,7 +27,8 @@ class ProductListViewModel(application: Application) : AndroidViewModel(applicat
         return mObservableProducts
     }
 
-    fun searchProducts(query: String){
-        //TODO: Part 7 - (6) creating a method for searching products
+    fun searchProducts(query: String): LiveData<List<ProductEntity>> {
+        return mRepository.searchProducts(query)
     }
+
 }
